@@ -10,23 +10,32 @@ import BookList from './BookList';
 
 class BooksApp extends React.Component {
   state = {
-    allBooks : []
+    allBooks: []
   }
 
-  handleSearchFilter = value =>{
-    this.setState({showSearchPage : false});
+  handleSearchFilter = value => {
+    this.setState({ showSearchPage: false });
   }
 
 
-  componentDidMount(){
-    BooksAPI.getAll().then((kitaplar) =>{
-      
-      this.setState(() => ({
-        allBooks : kitaplar
-      }))
-    });
-    
+  async componentDidMount() {
+
+    const allBooks = await BooksAPI.getAll();
+    this.setState({ allBooks });
+
+
+    // 1- Viewed Use async instead !!!  
+    // BooksAPI.getAll().then((kitaplar) =>{
+    //   this.setState(() => ({
+    //     allBooks : kitaplar
+    //   }))
+    // });
+
+
+
   }
+
+
 
   changeShelf = (willaddBook, shelf) => {
     BooksAPI.update(willaddBook, shelf).then(response => {
@@ -42,17 +51,20 @@ class BooksApp extends React.Component {
       }));
     });
   };
-  
+
   render() {
     return (
       <div className="app">
         <Switch>
-          <Route
+          {/* <Route
             path="/search"
             render={() => (
               <SearchBook allBooks={this.state.allBooks} changeShelf={this.changeShelf} />
             )}
-          />
+          /> */}
+          <Route path='/search'>
+            <SearchBook allBooks={this.state.allBooks} changeShelf={this.changeShelf} />
+          </Route>
           <Route
             exact
             path="/"

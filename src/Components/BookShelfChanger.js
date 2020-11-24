@@ -11,7 +11,7 @@ class BookShelfChanger extends Component {
         const { bookWillUpdate, allBooks } = this.props;
 
         // get shelf and set if exists.
-        let currentShelf; // = bookWillUpdate.shelf; won't work cause' search components  
+        let currentShelf = 'none'; // = bookWillUpdate.shelf; won't work cause' search components  
 
         //console.log(currentShelf);
         for (let item of allBooks) {
